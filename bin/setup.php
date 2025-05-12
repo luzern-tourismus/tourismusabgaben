@@ -5,7 +5,10 @@ use Ltag\Setup\LtagSetup;
 require_once(__DIR__ . "/../config.php");
 
 
-(new LtagSetup)->startSetup();
+(new \Tourismusabgaben\Setup\TourismusabgabenSetup())->start();
+
+
+//(new LtagSetup)->startSetup();
 
 
 /*

@@ -43,7 +43,7 @@ class DbConnection
 
             $iniList = parse_ini_file($filename, true, INI_SCANNER_RAW);
 
-            print_r($iniList);
+            //print_r($iniList);
 
             $host = $iniList['db_host'];
             $port = $iniList['db_port'];
@@ -121,7 +121,7 @@ class DbConnection
             }*/
 
             //if ($showErrorMessage) {
-            $errorMessage = 'Query Error: ' . $error->getMessage() . 'Sql: ' . $sqlParameterList->sql;
+            $errorMessage = 'Query Error: ' . $error->getMessage();  // . 'Sql: ' . $sqlParameterList->sql;
             echo $errorMessage;
             // (new LogMessage())->writeError($errorMessage);
             // (new Debug())->write($sqlParameterList->getParameterList());
@@ -132,13 +132,53 @@ class DbConnection
             //}
             //}
 
-            //return $query;
+
 
         }
-
+        return $query;
         //return $showErrorMessage;
 
     }
+
+
+
+
+    public function saveData($tableName, $data)
+    {
+
+        $field = implode(',',array_keys($data));
+        $value = implode(',:',array_keys($data));
+
+
+        $sql = 'INSERT INTO '.$tableName.' ('.$field.') VALUES (:'.$value.');';
+
+
+        $this->executeQuery($sql,$data);
+
+
+        return $this;
+
+        //echo $sql;
+        
+        
+        
+    }
+    
+
+
+    public function queryData($sql, $parameterList = [])
+    {
+
+        $query = $this->executeQuery($sql, $parameterList);
+
+         $result = $query->fetchAll();
+
+return $result;
+
+    }
+
+
+    
 
 
 }

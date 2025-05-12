@@ -9,9 +9,35 @@ class TableBuilder
     public $tableName;
 
 
+   /* public function setTableName($tableName)
+    {
+
+        $this->tableName=$tableName;
+        return $this;
+
+    }*/
+
+
+    public function __construct($tableName)
+    {
+
+        $this->tableName = $tableName;
+        $this->createTable();
+
+    }
+
+
 
     public function addTextField($fieldName)
     {
+
+        $this->addField($fieldName,'VARCHAR(255)');
+
+        //$sql = 'ALTER TABLE '.$this->tableName.' ADD '.$fieldName.' VARCHAR(255)';
+
+        //(new DbConnection())->executeQuery($sql);
+
+
         /*$field = new MySqlField($this);
         $field->fieldName = $fieldName;
         $field->fieldType = 'character varying(' . $length . ')';
@@ -21,6 +47,10 @@ class TableBuilder
 
     public function addLargeTextField($fieldName, $allowNull = false)
     {
+
+        $this->addField($fieldName,'text');
+
+
         /*$field = new MySqlField($this);
         $field->fieldName = $fieldName;
         $field->fieldType = 'text';
@@ -28,59 +58,49 @@ class TableBuilder
         return $this;
     }
 
-   /* public function addYesNoField($fieldName, $allowNull = false)
+    public function addBooleanField($fieldName, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'bool';
-        $field->allowNull = $allowNull;
+        $this->addField($fieldName,'boolean');
         return $this;
     }
 
     public function addDateField($fieldName, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'date';
-        $field->allowNull = $allowNull;
+        $this->addField($fieldName,'date');
         return $this;
     }
 
     public function addTimeField($fieldName, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'time';
-        $field->allowNull = $allowNull;
+        $this->addField($fieldName,'');
         return $this;
     }
 
     public function addDateTimeField($fieldName, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'datetime';
-        $field->allowNull = $allowNull;
+        $this->addField($fieldName,'');
         return $this;
     }
 
     public function addNumberField($fieldName, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'int';
-        $field->allowNull = $allowNull;
+        $this->addField($fieldName,'int');
         return $this;
     }
 
-    public function addLargeNumberField($fieldName, $allowNull = false)
+
+
+
+
+    private function addField($fieldName, $fieldType, $allowNull = false)
     {
-        $field = new MySqlField($this);
-        $field->fieldName = $fieldName;
-        $field->fieldType = 'bigint';
-        $field->allowNull = $allowNull;
-        return $this;
-    }*/
+
+        $sql = 'ALTER TABLE '.$this->tableName.' ADD COLUMN IF NOT EXISTS '.$fieldName.' '.$fieldType.';';   //VARCHAR(255)';
+
+        (new DbConnection())->executeQuery($sql);
+
+
+    }
 
 
 
@@ -90,11 +110,21 @@ class TableBuilder
     public function createTable()
     {
 
-        $sql = 'CREATE TABLE '.$this->tableName;
-        
-        
-        
-        
+        //$this->tableName=$tableName;
+
+        //$sql = 'CREATE TABLE '.$this->tableName;
+
+        $sql = 'CREATE TABLE IF NOT EXISTS '.$this->tableName.' (
+  id serial NOT NULL
+);';
+
+//$primaryIndexDataType = 'serial NOT NULL';
+
+
+        (new \Tourismusabgaben\Core\Db\DbConnection())->executeQuery($sql);
+
+        return $this;
+
     }
 
 

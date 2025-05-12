@@ -40,14 +40,7 @@ HTML;
     }
 
 
-    /*public function render()
-    {
 
-        $html = $this->getHtml();
-        echo $html;
-
-
-    }*/
 
 
 }

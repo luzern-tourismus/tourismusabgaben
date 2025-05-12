@@ -10,18 +10,20 @@ class BeherbergungTableDefinition extends AbstractTableDefinition
     protected function loadDefinition()
     {
 
-        $this->tableName = 'behergergung';
+        $this->tableName = 'beherbergung';
 
     }
 
 
-    const BEHERBERGUNG = 'behergergung';
+    const BEHERBERGUNG = 'beherbergung';
 
     const STRASSE = 'strasse';
 
     const PLZ = 'plz';
 
     const ORT = 'ort';
+
+    const BEMERKUNG = 'bemerkung';
 
 
 }

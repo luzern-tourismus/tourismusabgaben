@@ -3,10 +3,13 @@
 namespace Tourismusabgaben\App;
 
 
+use Tourismusabgaben\Business\Beherbergung\BeherbergungBuilder;
 use Tourismusabgaben\Core\App\AbstractApp;
 use Tourismusabgaben\Definition\Navigation\NavigationDefinition;
 use Tourismusabgaben\Template\TourismusabgabenTemplate;
-use Tourismusabgaben\View\BeherberungenView;
+use Tourismusabgaben\View\BeherbergungForm;
+use Tourismusabgaben\View\BeherberungenItem;
+use Tourismusabgaben\View\BeherberungenTable;
 use Tourismusabgaben\View\LoginView;
 
 
@@ -14,8 +17,7 @@ class TourismusabgabenApp extends AbstractApp
 {
 
 
-    public static $baseDir;
-
+    //public static $baseDir;
 
 
     public function start()
@@ -29,13 +31,17 @@ class TourismusabgabenApp extends AbstractApp
 
 
         $url = $_SERVER['REQUEST_URI'];
+        $urlList = explode('/', $url);
+
         $method = $_SERVER['REQUEST_METHOD'];
+
+        print_r($urlList);
 
         //echo $url;
 
         if ($method == 'GET') {
 
-            switch ($url) {
+            switch ('/'.$urlList[1]) {
 
 
                 case NavigationDefinition::HOME:
@@ -48,14 +54,44 @@ class TourismusabgabenApp extends AbstractApp
                     break;
 
 
-                    case NavigationDefinition::BEHERBERGUNGEN:
+                case NavigationDefinition::BEHERBERGUNG:
 
-                        $page = new TourismusabgabenTemplate();
-                        $page->title = 'Beherbergungen';
-                        $page->content = (new BeherberungenView())->getHtml();
-                        $page->render();
-    
-                        break;
+                    $page = new TourismusabgabenTemplate();
+                    $page->title = 'Beherbergungen';
+                    $page->content = (new BeherberungenTable())->getHtml();
+                    $page->render();
+
+                    break;
+
+
+                case NavigationDefinition::BEHERBERGUNG_VIEW:
+
+                    $view = new BeherberungenItem();
+                    $view->id = $urlList[2];  // substr($url, strlen(NavigationDefinition::BEHERBERGUNG_VIEW));
+
+                    $page = new TourismusabgabenTemplate();
+                    $page->title = 'Beherbergungen';
+                    $page->content = $view->getHtml();
+                    $page->render();
+
+
+
+                    break;
+
+
+
+                //substr("abcdef", -3, 1)
+
+
+                case NavigationDefinition::BEHERBERGUNG_NEW:
+
+                    $page = new TourismusabgabenTemplate();
+                    $page->title = 'Beherbergungen';
+                    $page->content = (new BeherbergungForm())->getHtml();
+                    $page->render();
+
+                    break;
+
 
 
                 /*case '/about':
@@ -72,7 +108,6 @@ class TourismusabgabenApp extends AbstractApp
                     $this->loadView('news_form.php');
 
                     break;*/
-
 
 
                 /*case '/login':
@@ -92,11 +127,59 @@ class TourismusabgabenApp extends AbstractApp
 
             }
 
+
+
+
+            /*
+            if (substr($url, 0, strlen(NavigationDefinition::BEHERBERGUNG_VIEW)) == NavigationDefinition::BEHERBERGUNG_VIEW) {
+
+
+                $view = new BeherberungenItem();
+                $view->id = substr($url, strlen(NavigationDefinition::BEHERBERGUNG_VIEW));
+
+
+
+
+                $page = new TourismusabgabenTemplate();
+                $page->title = 'Beherbergungen';
+                $page->content = $view->getHtml();
+                $page->render();
+
+
+            }*/
+
+
+
         }
 
         if ($method == 'POST') {
 
-            print_r($_POST);
+
+            $data = $_POST;
+
+            switch ($url) {
+
+
+                case NavigationDefinition::BEHERBERGUNG_POST:
+
+                    $builder = new BeherbergungBuilder();
+                    $builder->beherbergung = $data['beherbergung'];
+                    $builder->create();
+
+                    header('Location: ' . NavigationDefinition::BEHERBERGUNG);
+                    exit;
+
+                default:
+
+                    http_response_code(404);
+                    $this->loadView('404.php');
+
+                    break;
+
+            }
+
+
+            /*print_r($_POST);
 
 
             $fname = 11;  // $_POST['fname'];
@@ -119,17 +202,11 @@ class TourismusabgabenApp extends AbstractApp
                 //}
             } catch (\PDOException $e) {
                 echo $e->getMessage();
-            }
+            }*/
 
         }
 
     }
-
-
-
-
-
-
 
 
 }
