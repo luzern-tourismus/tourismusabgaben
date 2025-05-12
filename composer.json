@@ -1,0 +1,17 @@
+{
+    "name": "luzerntourismus/tourismusabgaben",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Luzerntourismus\\Tourismusabgaben\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Urs Lang",
+            "email": "urs.lang@luzern.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
