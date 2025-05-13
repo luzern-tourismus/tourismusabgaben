@@ -4,16 +4,18 @@ namespace Tourismusabgaben\Definition\Database;
 
 use Tourismusabgaben\Core\Definition\AbstractTableDefinition;
 
-class BeherbergungTypTableDefinition extends AbstractTableDefinition
+class UserTableDefinition extends AbstractTableDefinition
 {
 
     protected function loadDefinition()
     {
 
-        $this->tableName = 'beherbergung_typ';
+        $this->tableName = 'user';
 
     }
 
-    const BEHERBERGUNG_TYP = 'beherbergung_typ';
+    const LOGIN = 'login';
+
+    const PASSWORD = 'password';
 
 }

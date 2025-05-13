@@ -8,6 +8,9 @@ abstract class AbstractApp
 
     public static $baseDir;
 
+    abstract protected function loadApp();
+
+
     abstract public function start();
 
 
