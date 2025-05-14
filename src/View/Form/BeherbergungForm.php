@@ -1,10 +1,11 @@
 <?php
 
-namespace Tourismusabgaben\View;
+namespace Tourismusabgaben\View\Form;
 
 
+use Tourismusabgaben\Controller\BeherbergungPostController;
 use Tourismusabgaben\Core\View\AbstractView;
-use Tourismusabgaben\Definition\Navigation\NavigationDefinition;
+use Tourismusabgaben\View\BeherbergungTypListBox;
 
 class BeherbergungForm extends AbstractView
 {
@@ -15,7 +16,7 @@ class BeherbergungForm extends AbstractView
     public function getHtml()
     {
 
-        $html = '<form action="'. NavigationDefinition::BEHERBERGUNG_POST.'" method="POST">
+        $html = '<form action="'. (new BeherbergungPostController())->getUrl().'" method="POST">
   <div class="form-group">
     <label for="beherbergung">Beherbergung</label>
     <input type="text" class="form-control" id="beherbergung" name="beherbergung" autofocus>

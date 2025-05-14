@@ -10,11 +10,11 @@ class UserTableDefinition extends AbstractTableDefinition
     protected function loadDefinition()
     {
 
-        $this->tableName = 'user';
+        $this->tableName = 'benutzer';
 
     }
 
-    const LOGIN = 'login';
+    const LOGIN = 'email';
 
     const PASSWORD = 'password';
 

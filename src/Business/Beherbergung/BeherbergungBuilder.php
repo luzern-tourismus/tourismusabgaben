@@ -16,11 +16,11 @@ class BeherbergungBuilder
 
     public $ort;
 
+    public $gemeindeId;
+
 
     public function create()
     {
-
-
 
         $data = [];
         $data[BeherbergungTableDefinition::BEHERBERGUNG] =$this->beherbergung;

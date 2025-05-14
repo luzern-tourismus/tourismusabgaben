@@ -27,4 +27,7 @@ class BeherbergungTableDefinition extends AbstractTableDefinition
     const BEMERKUNG = 'bemerkung';
 
 
+    const GEMEINDE_ID = 'gemeinde_id';
+
+
 }

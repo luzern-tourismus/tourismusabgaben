@@ -4,29 +4,27 @@ namespace Tourismusabgaben\Controller;
 
 use Tourismusabgaben\Core\Controller\AbstractController;
 use Tourismusabgaben\Template\TourismusabgabenTemplate;
-use Tourismusabgaben\View\Table\BeherberungenTable;
+use Tourismusabgaben\View\LoginView;
 
-class BeherbergungController extends AbstractController
+class HomeController extends AbstractController
 {
-
 
     public function loadController()
     {
 
-        $this->url='beherbergungen';
+        $this->url = '';
 
     }
 
 
-    public function onView() {
+    public function onView()
+    {
 
         $page = new TourismusabgabenTemplate();
-        $page->title = 'Beherbergungen';
-        $page->content = (new BeherberungenTable())->getHtml();
+        $page->title = 'Login';
+        $page->content = (new LoginView)->getHtml();
         $page->render();
 
     }
-
-
 
 }

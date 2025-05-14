@@ -4,16 +4,16 @@ namespace Tourismusabgaben\Controller;
 
 use Tourismusabgaben\Core\Controller\AbstractController;
 use Tourismusabgaben\Template\TourismusabgabenTemplate;
-use Tourismusabgaben\View\Table\BeherberungenTable;
+use Tourismusabgaben\View\Form\BeherbergungForm;
 
-class BeherbergungController extends AbstractController
+class BeherbergungNewController extends AbstractController
 {
 
 
     public function loadController()
     {
 
-        $this->url='beherbergungen';
+        $this->url='beherbergungen-new';
 
     }
 
@@ -22,9 +22,8 @@ class BeherbergungController extends AbstractController
 
         $page = new TourismusabgabenTemplate();
         $page->title = 'Beherbergungen';
-        $page->content = (new BeherberungenTable())->getHtml();
+        $page->content = (new BeherbergungForm())->getHtml();
         $page->render();
-
     }
 
 

@@ -41,10 +41,6 @@ class BeherbergungReader
 
         $sql.= ' ORDER BY beherbergung;';  // DESC';
 
-            //'SELECT * FROM ' . (new BeherbergungTableDefinition())->tableName . ' ORDER BY beherbergung;'
-
-//print_r($parameter);
-
         foreach ((new DbConnection())->queryData($sql,$parameter) as $row) {
 
             $item = new BeherbergungItem();
